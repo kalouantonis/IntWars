@@ -130,7 +130,10 @@ bool Game::handleSpawn(ENetPeer *peer, ENetPacket *packet) {
       sendPacket(peer, spawn, CHL_S2C);
             
       PlayerInfo info(p);
-      sendPacket(peer, info, CHL_S2C); 
+      sendPacket(peer, info, CHL_S2C);
+
+      p->getChampion()->getStats().setSummonerspellEnabled(0, true);
+      p->getChampion()->getStats().setSummonerspellEnabled(1, true);
    }
 
    const Map::ObjectMap& objects = map->getObjects();
@@ -387,6 +390,11 @@ bool Game::handleClick(HANDLE_ARGS) {
 bool Game::handleCastSpell(HANDLE_ARGS) {
    CastSpell *spell = reinterpret_cast<CastSpell *>(packet->data);
 
+   if(spell->spellSlot & (1 << 6)) {
+      printf("SummonerSpell Cast : Slot %d, coord %f ; %f, coord2 %f, %f, target NetId %08X\n", spell->spellSlot & 0x3F, spell->x, spell->y, spell->x2, spell->y2, spell->targetNetId);
+      return true;
+   }
+
    printf("Spell Cast : Slot %d, coord %f ; %f, coord2 %f, %f, target NetId %08X\n", spell->spellSlot & 0x3F, spell->x, spell->y, spell->x2, spell->y2, spell->targetNetId);
 
    uint32 futureProjNetId = GetNewNetID();
@@ -603,9 +611,8 @@ bool Game::handleSkillUp(HANDLE_ARGS) {
     
     SkillUpResponse skillUpResponse(peerInfo(peer)->getChampion()->getNetId(), skillUpPacket->skill, s->getLevel(), peerInfo(peer)->getChampion()->getSkillPoints());
     sendPacket(peer, skillUpResponse, CHL_GAMEPLAY);
-    
-    CharacterStats stats(MM_One, peerInfo(peer)->getChampion()->getNetId(), FM1_SPELL, (unsigned short)(0x108F)); // activate all the spells
-    sendPacket(peer, reinterpret_cast<uint8 *>(&stats), sizeof(stats)-2, CHL_LOW_PRIORITY, 2);
+
+    peerInfo(peer)->getChampion()->getStats().setSpellEnabled(skillUpPacket->skill, true);
     
     return true;
 }

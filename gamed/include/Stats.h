@@ -13,7 +13,8 @@
 enum FieldMaskOne : uint32 {
     FM1_Gold =          0x00000001,
     FM1_Gold_Total =    0x00000002,
-    FM1_SPELL =         0x00000004 // Sending short 0x108[1248] activates spells 1/2/3/4
+    FM1_Spells_Enabled =         0x00000004, // Bits: 0-3 -> Q-R, 4-9 -> Items, 10 -> Trinket
+    FM1_Summonerspells_Enabled = 0x00000008 // Bits: 0 -> D, 1 -> F
 };
 
 enum FieldMaskTwo : uint32 {
@@ -418,6 +419,34 @@ public:
     virtual void setCritDamagePct (float critDmg) {
         critDamagePct = critDmg;
     }
+
+   virtual bool getSpellEnabled(uint8 id) {
+      uint16 mask = (uint16) floor(getStat(MM_One, FM1_Spells_Enabled) + 0.5f);
+      return (mask & (1 << id)) != 0;
+   }
+
+   virtual void setSpellEnabled(uint8 id, bool enabled) {
+      uint16 mask = (uint16) floor(getStat(MM_One, FM1_Spells_Enabled) + 0.5f);
+      if(enabled)
+         mask |= 1 << id;
+      else
+         mask |= ~(1 << id);
+      setStat(MM_One, FM1_Spells_Enabled, (float) mask);
+   }
+
+   virtual bool getSummonerspellEnabled(uint8 id) {
+      uint16 mask = (uint16) floor(getStat(MM_One, FM1_Summonerspells_Enabled) + 0.5f);
+      return (mask & (1 << id)) != 0;
+   }
+
+   virtual void setSummonerspellEnabled(uint8 id, bool enabled) {
+      uint16 mask = (uint16) floor(getStat(MM_One, FM1_Summonerspells_Enabled) + 0.5f);
+      if(enabled)
+         mask |= 1 << id;
+      else
+         mask |= ~(1 << id);
+      setStat(MM_One, FM1_Summonerspells_Enabled, (float) mask);
+   }
 
     /**
      * Meta-stats, relying on other stats

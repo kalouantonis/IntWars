@@ -225,3 +225,8 @@ void Game::notifyChampionSpawned(Champion* c, uint32 side) {
    HeroSpawn2 hs(c);
    broadcastPacketTeam(side == 0 ? TEAM_BLUE : TEAM_PURPLE, hs, CHL_S2C);
 }
+
+void Game::notifySetCooldown(Champion* c, uint8 slotId, float currentCd, float totalCd) {
+   SetCooldown cd(c->getNetId(), slotId, currentCd, totalCd);
+   broadcastPacket(cd, CHL_S2C);
+}

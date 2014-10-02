@@ -1023,7 +1023,7 @@ public:
 
 struct CastSpell {
     PacketHeader header;
-    uint8 spellSlot; // 2 first bits seem to be unknown flags
+    uint8 spellSlot; // 2 first(highest) bits: 10 - ability or item, 01 - summoner spell
     float x, y;
     float x2, y2;
     uint32 targetNetId; // If 0, use coordinates, else use target net id
@@ -1303,6 +1303,18 @@ public:
       buffer.fill(0, 512-message.length());
    }
 };
+
+
+class SetCooldown : public BasePacket {
+public:
+   SetCooldown(uint32 netId, uint8 slotId, float currentCd, float totalCd = 0.0f)
+         : BasePacket(PKT_S2C_SetCooldown, netId) {
+      buffer << slotId;
+      buffer << totalCd;
+      buffer << currentCd;
+   }
+};
+
 /* End New Packets */
 
 #if defined( __GNUC__ )

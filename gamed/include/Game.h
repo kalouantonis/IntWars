@@ -102,6 +102,7 @@ class Game
       void notifyLeaveVision(Object* o, uint32 side);
       void notifyEnterVision(Object* o, uint32 side);
       void notifyChampionSpawned(Champion* c, uint32 side);
+      void notifySetCooldown(Champion* c, uint8 slotId, float currentCd, float totalCd = 0.0f);
 
 		// Tools
 		static void printPacket(const uint8 *buf, uint32 len);

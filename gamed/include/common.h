@@ -90,6 +90,7 @@ enum PacketCmd : uint8
 
    PKT_C2S_LockCamera = 0x81,
    PKT_C2S_BuyItemReq = 0x82,
+   PKT_S2C_SetCooldown = 0x85,
    PKT_S2C_SpawnParticle = 0x87,
    PKT_S2C_QueryStatusAns = 0x88,
    PKT_C2S_Exit = 0x8F,

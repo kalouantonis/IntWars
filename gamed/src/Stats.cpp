@@ -31,9 +31,10 @@ uint8 Stats::getSize(uint8 blockId, uint32 stat) {
    switch(blockId) {
    case MM_One:
       switch(stat) {
-      case FM1_SPELL:
+      case FM1_Spells_Enabled:
          return 2;
-      
+      case FM1_Summonerspells_Enabled:
+         return 2; // not 100% sure
       }
       
    case MM_Four:
