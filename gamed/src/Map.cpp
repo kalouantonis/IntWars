@@ -99,7 +99,7 @@ void Map::update(int64 diff) {
 
 Object* Map::getObjectById(uint32 id) {
    if(objects.find(id) == objects.end()) {
-      return 0;
+      return nullptr;
    }
    
    return objects[id];

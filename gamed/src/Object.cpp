@@ -26,13 +26,13 @@ void Object::calculateVector(float xtarget, float ytarget) {
    yvector /= toDivide;
 }
 
-void Object::setTarget(Target* target) {
+void Object::setTarget(TargetPtr target) {
    if(this->target == target)
       return;
 
-   if(this->target && this->target->isSimpleTarget()) {
-      delete this->target;
-   }
+   // if(this->target && this->target->isSimpleTarget()) {
+      // delete this->target;
+   // }
       
    this->target = target;
 

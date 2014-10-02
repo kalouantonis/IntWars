@@ -31,30 +31,32 @@ public:
    
    virtual ~Map() { }
    virtual void update(long long diff);
-   virtual float getGoldPerSecond() = 0;
+   virtual float getGoldPerSecond() const = 0;
    virtual bool spawn() = 0;
    
    Object* getObjectById(uint32 id);
    void addObject(Object* o);
    void removeObject(Object* o);
+
    const std::vector<uint32>& getExpToLevelUp() { return expToLevelUp; }
-   uint64 getGameTime() { return gameTime; }
-   uint64 getFirstGoldTime() { return firstGoldTime; }
+   uint64 getGameTime() const { return gameTime; }
+   uint64 getFirstGoldTime() const { return firstGoldTime; }
+
    virtual const Target getRespawnLoc(int side) const = 0;
    virtual float getGoldFor(Unit* u) const = 0;
    virtual float getExpFor(Unit* u) const = 0 ;
    
    Game* getGame() const { return game; }
    
-   const std::map<uint32, Object*>& getObjects() { return objects; }
+   const std::map<uint32, Object*>& getObjects() const { return objects; }
    void stopTargeting(Unit* target);
 
    std::vector<Champion*> getChampionsInRange(Target* t, float range);
    
-   bool getFirstBlood() { return firstBlood; }
+   bool getFirstBlood() const { return firstBlood; }
    void setFirstBlood(bool state) { firstBlood = state; }
    
-   bool getKillReduction() { return killReduction; }
+   bool getKillReduction() const { return killReduction; }
    void setKillReduction(bool state) { killReduction = state; }
    
    bool teamHasVisionOn(int side, Object* o);

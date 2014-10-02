@@ -24,7 +24,7 @@ struct MovementVector {
     MovementVector() : x(0), y(0){ }
     MovementVector(int16 x, int16 y) : x(x), y(y) { }
     MovementVector(float x, float y) : x(targetXToNormalFormat(x)), y(targetYToNormalFormat(y)) { }
-    Target* toTarget() { return new Target(2.0f*x + MAP_WIDTH, 2.0f*y + MAP_HEIGHT); }
+    TargetPtr toTarget() { return TargetPtr(new Target(2.0f*x + MAP_WIDTH, 2.0f*y + MAP_HEIGHT)); }
     
     static int16 targetXToNormalFormat(float _x){
         return (int16)((_x) - MAP_WIDTH)/2;
@@ -49,7 +49,7 @@ protected:
    /**
     * Current target the object running to (can be coordinates or an object)
     */
-	Target* target;
+	TargetPtr target;
 
    std::vector<MovementVector> waypoints;
    uint32 curWaypoint;
@@ -90,8 +90,8 @@ public:
 
    virtual bool isSimpleTarget() { return false; }
 
-   Target* getTarget() { return target; }
-   void setTarget(Target* target);
+   TargetPtr getTarget() const { return target; }
+   void setTarget(TargetPtr target);
    void setWaypoints(const std::vector<MovementVector>& waypoints);
 
    const std::vector<MovementVector>& getWaypoints() const { return waypoints; }

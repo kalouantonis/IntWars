@@ -8,8 +8,11 @@
 #include <array>
 
 class Inventory {
+public:
+   typedef std::array<ItemInstance*, 7> ItemArray;
+
 private:
-   std::array<ItemInstance*, 7> items;
+   ItemArray items;
    std::vector<ItemInstance*> _getAvailableRecipeParts(const ItemTemplatePtr recipe);
 
 public:
@@ -23,7 +26,7 @@ public:
 
    const ItemInstance* addItem(const ItemTemplatePtr itemTemplate);
    void swapItems(uint8 slotFrom, uint8 slotTo);
-   const std::array<ItemInstance*, 6>& getItems() const { return items; }
+   const ItemArray& getItems() const { return items; }
    void removeItem(uint8 slot);
    
    std::vector<ItemInstance*> getAvailableRecipeParts(const ItemTemplatePtr recipe);
