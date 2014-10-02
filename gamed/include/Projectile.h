@@ -19,10 +19,10 @@ protected:
    uint32 flags;
 
 public:
-   Projectile(Map* map, uint32 id, float x, float y, uint32 collisionRadius, Unit* owner, TargetPtr target, Spell* originSpell, float moveSpeed, uint32 projectileId, uint32 flags = 0) : Object(map, id, x, y, collisionRadius), originSpell(originSpell), moveSpeed(moveSpeed), owner(owner), projectileId(projectileId), flags(flags) {
+   Projectile(Map* map, uint32 id, float x, float y, uint32 collisionRadius, Unit* owner, Target* target, Spell* originSpell, float moveSpeed, uint32 projectileId, uint32 flags = 0) : Object(map, id, x, y, collisionRadius), originSpell(originSpell), moveSpeed(moveSpeed), owner(owner), projectileId(projectileId), flags(flags) {
       setTarget(target);
       if(!target->isSimpleTarget()) {
-         static_cast<Object*>(target.get())->incrementAttackerCount();
+         static_cast<Object*>(target)->incrementAttackerCount();
       }
       owner->incrementAttackerCount();
    }
@@ -34,7 +34,7 @@ public:
    
    virtual void setToRemove() {
       if(target && !target->isSimpleTarget()) {
-         static_cast<Object*>(target.get())->decrementAttackerCount();
+         static_cast<Object*>(target)->decrementAttackerCount();
       }
       owner->decrementAttackerCount();
       Object::setToRemove();

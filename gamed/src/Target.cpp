@@ -1,7 +1,7 @@
 #include "Target.h"
 #include <cmath>
 
-float Target::distanceWith(const TargetPtr& target) {
+float Target::distanceWith(Target* target) {
   return distanceWith(target->getX(), target->getY());
 }
 
