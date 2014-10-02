@@ -1,28 +1,24 @@
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
 
-#include <map>
+#include <unordered_map>
 
 #include "Item.h"
 
 class ItemManager {
 private:
-   std::map<uint32, ItemTemplate*> itemTemplates;
+   std::unordered_map<uint32, ItemTemplatePtr> itemTemplates;
+
    ItemManager() { }
-   static ItemManager* instance;
-   
 public:
-   static ItemManager* getInstance() {
-      if(!instance) {
-         instance = new ItemManager();
-      }
-      
+   static ItemManager& getInstance() {
+      static ItemManager instance;    
       return instance;
    }
    
    void init();
-   const ItemTemplate* getItemTemplateById(uint32 id);
 
+   const ItemTemplatePtr getItemTemplateById(uint32 id);
 };
 
 #endif

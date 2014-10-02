@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const ItemInstance* Inventory::addItem(const ItemTemplate* itemTemplate) {
+const ItemInstance* Inventory::addItem(const ItemTemplatePtr itemTemplate) {
    int slot = -1;
    
    if(itemTemplate->isTrinket()) {
@@ -49,11 +49,11 @@ const ItemInstance* Inventory::addItem(const ItemTemplate* itemTemplate) {
    return items[slot];
 }
 
-vector<ItemInstance*> Inventory::getAvailableRecipeParts(const ItemTemplate* recipe) {
+vector<ItemInstance*> Inventory::getAvailableRecipeParts(const ItemTemplatePtr recipe) {
    vector<ItemInstance*> toReturn;
    
    for(uint32 itemId : recipe->getRecipeParts()) {
-      const ItemTemplate* item = ItemManager::getInstance()->getItemTemplateById(itemId);
+      const ItemTemplatePtr item = ItemManager::getInstance().getItemTemplateById(itemId);
       if(!item) {
          continue;
       }
@@ -70,7 +70,7 @@ vector<ItemInstance*> Inventory::getAvailableRecipeParts(const ItemTemplate* rec
    return toReturn;
 }
 
-vector<ItemInstance*> Inventory::_getAvailableRecipeParts(const ItemTemplate* recipe) {
+vector<ItemInstance*> Inventory::_getAvailableRecipeParts(const ItemTemplatePtr recipe) {
    vector<ItemInstance*> toReturn;
    
    for(ItemInstance* i : items) {
@@ -86,7 +86,7 @@ vector<ItemInstance*> Inventory::_getAvailableRecipeParts(const ItemTemplate* re
    }
    
    for(uint32 itemId : recipe->getRecipeParts()) {
-      vector<ItemInstance*> parts = _getAvailableRecipeParts(ItemManager::getInstance()->getItemTemplateById(itemId));
+      vector<ItemInstance*> parts = _getAvailableRecipeParts(ItemManager::getInstance().getItemTemplateById(itemId));
       toReturn.insert(toReturn.begin(), parts.begin(), parts.end());
    }
    

@@ -41,7 +41,7 @@ int main(int argc, char ** argv)
       return EXIT_FAILURE;
    }
    
-   ItemManager::getInstance()->init();
+   ItemManager::getInstance().init();
    
    puts("Game started");
 

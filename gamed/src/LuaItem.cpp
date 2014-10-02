@@ -4,7 +4,7 @@
 #include "Inventory.h"
 
 void LuaScript::addItem() {
-    sol::constructors <sol::types < ItemTemplate*, uint8, uint8>> itemInstanceCtr;
+    sol::constructors <sol::types < ItemTemplatePtr, uint8, uint8>> itemInstanceCtr;
     sol::userdata <ItemInstance> itemInstanceUserData(
             "ItemInstance", itemInstanceCtr,
             "getTemplate", &ItemInstance::getTemplate,
@@ -39,3 +39,4 @@ void LuaScript::addItem() {
             "getAvailableRecipeParts", &Inventory::getAvailableRecipeParts);
     lua.set_userdata(inventoryUserData);
 }
+

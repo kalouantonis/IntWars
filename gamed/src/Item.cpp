@@ -5,7 +5,7 @@ uint32 ItemTemplate::getTotalPrice() const {
    uint32 toReturn = price;
    
    for(uint32 itemId : recipes) {
-      const ItemTemplate* item = ItemManager::getInstance()->getItemTemplateById(itemId);
+      const ItemTemplatePtr item = ItemManager::getInstance().getItemTemplateById(itemId);
       if(!item) {
          continue;
       }

@@ -5,6 +5,8 @@
 #include "Stats.h"
 #include <vector>
 
+#include <memory>
+
 class ItemTemplate
 {
 private:
@@ -42,23 +44,29 @@ public:
 
 };
 
+typedef std::shared_ptr<ItemTemplate> ItemTemplatePtr;
+
 class ItemInstance {
+  
 private:
-   const ItemTemplate* itemTemplate;
+   const ItemTemplatePtr itemTemplate;
    uint8 slot, stacks;
    float cooldown;
    bool recipeSearchFlag;
 
 public:
-   ItemInstance(const ItemTemplate* itemTemplate, uint8 slot = 0, uint8 stacks = 1) : itemTemplate(itemTemplate), cooldown(0), slot(slot), stacks(stacks), recipeSearchFlag(false) { }
-   const ItemTemplate* getTemplate() const { return itemTemplate; }
-   uint8 getSlot() const { return slot; }
-   uint8 getStacks() const { return stacks; }
-   void incrementStacks() { ++stacks; }
-   
-   bool getRecipeSearchFlag() const { return recipeSearchFlag; }
-   void setRecipeSearchFlag(bool flag) { recipeSearchFlag = flag; }
+   ItemInstance(const ItemTemplatePtr itemTemplate, uint8 slot = 0, uint8 stacks = 1) 
+    :itemTemplate(itemTemplate), cooldown(0), slot(slot), stacks(stacks), recipeSearchFlag(false) 
+  { }
 
+  const ItemTemplatePtr getTemplate() const { return itemTemplate; }
+  uint8 getSlot() const { return slot; }
+  uint8 getStacks() const { return stacks; }
+  void incrementStacks() { ++stacks; }
+  
+
+  bool getRecipeSearchFlag() const { return recipeSearchFlag; }
+  void setRecipeSearchFlag(bool flag) { recipeSearchFlag = flag; }
 };
 
 #endif   /* ITEM_H */

@@ -614,7 +614,7 @@ bool Game::handleBuyItem(HANDLE_ARGS) {
    
    BuyItemReq *request = reinterpret_cast<BuyItemReq *>(packet->data);
    
-   const ItemTemplate* itemTemplate = ItemManager::getInstance()->getItemTemplateById(request->id);
+   const ItemTemplatePtr itemTemplate = ItemManager::getInstance().getItemTemplateById(request->id);
    if(!itemTemplate) {
       return false;
    }
@@ -630,11 +630,11 @@ bool Game::handleBuyItem(HANDLE_ARGS) {
    
       i = peerInfo(peer)->getChampion()->getInventory().addItem(itemTemplate);
    
-      if(i == 0) { // Slots full
+      if(i == nullptr) { // Slots full
          return false;
       }
    } else {
-      for(ItemInstance* instance : recipeParts) {
+      for(const ItemInstance* instance : recipeParts) {
          price -= instance->getTemplate()->getTotalPrice();
       }
       
@@ -642,7 +642,7 @@ bool Game::handleBuyItem(HANDLE_ARGS) {
          return false;
       }
    
-      for(ItemInstance* instance : recipeParts) {
+      for(const ItemInstance* instance : recipeParts) {
          peerInfo(peer)->getChampion()->getStats().unapplyStatMods(instance->getTemplate()->getStatMods());
          notifyRemoveItem(peerInfo(peer)->getChampion(), instance->getSlot());
          peerInfo(peer)->getChampion()->getInventory().removeItem(instance->getSlot());

@@ -6,11 +6,9 @@
 
 using namespace std;
 
-ItemManager* ItemManager::instance = 0;
-
 void ItemManager::init() {
    // TODO : this is highly inefficient
-   std::vector<unsigned char> iniFile;
+   vector<unsigned char> iniFile;
    
    for(uint32 i = 1000; i < 4000; ++i) {
       iniFile.clear();
@@ -56,13 +54,15 @@ void ItemManager::init() {
          ++c;
       }
       
-      itemTemplates[i] = new ItemTemplate(i, maxStack, price, sellBack, trinket, statMods, recipes);
+      itemTemplates[i] = ItemTemplatePtr(
+         new ItemTemplate(i, maxStack, price, sellBack, trinket, statMods, recipes)
+      );
    }
    
    printf("Loaded %lu items\n", itemTemplates.size());
 }
 
-const ItemTemplate* ItemManager::getItemTemplateById(uint32 id) {
+const ItemTemplatePtr ItemManager::getItemTemplateById(uint32 id) {
    if(itemTemplates.find(id) == itemTemplates.end()) {
       return 0;
    }

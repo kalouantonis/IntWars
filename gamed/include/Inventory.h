@@ -8,8 +8,9 @@
 
 class Inventory {
 private:
+   // TODO: Use std::array<ItemInstance*, 6>
    std::vector<ItemInstance*> items;
-   std::vector<ItemInstance*> _getAvailableRecipeParts(const ItemTemplate* recipe);
+   std::vector<ItemInstance*> _getAvailableRecipeParts(const ItemTemplatePtr recipe);
 
 public:
     
@@ -17,12 +18,14 @@ public:
       items = { 0, 0, 0, 0, 0, 0, 0 };
    }
    
-   const ItemInstance* addItem(const ItemTemplate* itemTemplate);
+   // TODO: Add destructor that clears items
+
+   const ItemInstance* addItem(const ItemTemplatePtr itemTemplate);
    void swapItems(uint8 slotFrom, uint8 slotTo);
    const std::vector<ItemInstance*>& getItems() const { return items; }
    void removeItem(uint8 slot);
    
-   std::vector<ItemInstance*> getAvailableRecipeParts(const ItemTemplate* recipe);
+   std::vector<ItemInstance*> getAvailableRecipeParts(const ItemTemplatePtr recipe);
     
 };
 
