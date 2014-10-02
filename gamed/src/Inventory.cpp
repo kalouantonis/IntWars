@@ -4,21 +4,28 @@
 
 using namespace std;
 
+Inventory::~Inventory() {
+   for(ItemInstance* instance : items) {
+      if(instance != nullptr) 
+         delete instance;
+   }
+}
+
 const ItemInstance* Inventory::addItem(const ItemTemplatePtr itemTemplate) {
    int slot = -1;
    
    if(itemTemplate->isTrinket()) {
-      if(items[6] == 0) {
+      if(items[6] == nullptr) {
          items[6] = new ItemInstance(itemTemplate, 6, 1);
          return items[6];
       }
       
-      return 0;
+      return nullptr;
    }
 
    if(itemTemplate->getMaxStack() > 1) {
       for(slot = 0; slot < 6; ++slot) {
-         if(items[slot] == 0) {
+         if(items[slot] == nullptr) {
             continue;
          }
       
@@ -27,20 +34,20 @@ const ItemInstance* Inventory::addItem(const ItemTemplatePtr itemTemplate) {
                items[slot]->incrementStacks();
                return items[slot];
             } else if(items[slot]->getStacks() == itemTemplate->getMaxStack()) {
-               return 0;
+               return nullptr;
             }
          }
       }
    }
    
    for(slot = 0; slot < 6; ++slot) {
-      if(items[slot] == 0) {
+      if(items[slot] == nullptr) {
          break;
       }
    }
    
    if(slot == 6) { // Inventory full
-      return 0;
+      return nullptr;
    }
    
    printf("Adding item %d to slot %d\n", itemTemplate->getId(), slot);
@@ -100,10 +107,10 @@ void Inventory::swapItems(uint8 slotFrom, uint8 slotTo) {
 }
 
 void Inventory::removeItem(uint8 slot) {
-   if(items[slot] == 0) {
+   if(items[slot] == nullptr) {
       return;
    }
    
    delete items[slot];
-   items[slot] = 0;
+   items[slot] = nullptr;
 }

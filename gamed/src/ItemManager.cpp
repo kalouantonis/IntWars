@@ -64,7 +64,7 @@ void ItemManager::init() {
 
 const ItemTemplatePtr ItemManager::getItemTemplateById(uint32 id) {
    if(itemTemplates.find(id) == itemTemplates.end()) {
-      return 0;
+      return nullptr;
    }
    
    return itemTemplates[id];

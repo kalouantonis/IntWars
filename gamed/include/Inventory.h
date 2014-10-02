@@ -5,24 +5,25 @@
 
 #include "Item.h"
 
+#include <array>
 
 class Inventory {
 private:
-   // TODO: Use std::array<ItemInstance*, 6>
-   std::vector<ItemInstance*> items;
+   std::array<ItemInstance*, 7> items;
    std::vector<ItemInstance*> _getAvailableRecipeParts(const ItemTemplatePtr recipe);
 
 public:
     
    Inventory() {
-      items = { 0, 0, 0, 0, 0, 0, 0 };
+      items.fill(nullptr);
    }
    
    // TODO: Add destructor that clears items
+   ~Inventory();
 
    const ItemInstance* addItem(const ItemTemplatePtr itemTemplate);
    void swapItems(uint8 slotFrom, uint8 slotTo);
-   const std::vector<ItemInstance*>& getItems() const { return items; }
+   const std::array<ItemInstance*, 6>& getItems() const { return items; }
    void removeItem(uint8 slot);
    
    std::vector<ItemInstance*> getAvailableRecipeParts(const ItemTemplatePtr recipe);
