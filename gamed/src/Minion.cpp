@@ -111,7 +111,7 @@ void Minion::update(int64 diff) {
       Champion* c = dynamic_cast<Champion*>(unitTarget);
       
       if (c && !autoAttackFlag) {
-         const std::map<uint32, Object*>& objects = map->getObjects();
+         const Map::ObjectMap& objects = map->getObjects();
          Unit* nextTarget = 0;
          unsigned int nextTargetPriority = 10;
          for(auto& it : objects) {

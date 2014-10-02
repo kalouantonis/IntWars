@@ -133,7 +133,7 @@ bool Game::handleSpawn(ENetPeer *peer, ENetPacket *packet) {
       sendPacket(peer, info, CHL_S2C); 
    }
 
-   const std::map<uint32, Object*>& objects = map->getObjects();
+   const Map::ObjectMap& objects = map->getObjects();
  
    for(auto kv : objects) {
       Turret* t = dynamic_cast<Turret*>(kv.second);

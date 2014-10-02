@@ -1,5 +1,3 @@
-#include <map>
-
 #include "Map.h"
 #include "Projectile.h"
 #include "Spell.h"
@@ -18,7 +16,7 @@ void Projectile::update(int64 diff) {
    }
    
    if(target->isSimpleTarget()) { // Skillshot
-      const std::map<uint32, Object*>& objects = map->getObjects();
+      const Map::ObjectMap& objects = map->getObjects();
       for(auto& it : objects) {
          if(isToRemove()) {
             return;

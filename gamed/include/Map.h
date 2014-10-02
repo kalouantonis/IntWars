@@ -1,7 +1,7 @@
 #ifndef _MAP_H
 #define _MAP_H
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "stdafx.h"
@@ -11,10 +11,13 @@
 class Game;
 
 class Map {
+public:
+   typedef std::unordered_map<uint32, Object*> ObjectMap;
 
 protected:
-   std::map<uint32, Object*> objects;
-   std::map<uint32, Unit*> visionUnits[3];
+   ObjectMap objects;
+   std::unordered_map<uint32, Unit*> visionUnits[3];
+
    std::vector<uint32> expToLevelUp;
    int waveNumber;
    const uint64 firstSpawnTime;
@@ -48,7 +51,7 @@ public:
    
    Game* getGame() const { return game; }
    
-   const std::map<uint32, Object*>& getObjects() const { return objects; }
+   const ObjectMap& getObjects() const { return objects; }
    void stopTargeting(Unit* target);
 
    std::vector<Champion*> getChampionsInRange(Target* t, float range);

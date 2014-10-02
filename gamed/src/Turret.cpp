@@ -21,7 +21,7 @@ void Turret::update(int64 diff)
 {
    // No target : try to find a new one
    if(!isAttacking) {
-      const std::map<uint32, Object*>& objects = map->getObjects();
+      const Map::ObjectMap& objects = map->getObjects();
       Unit* nextTarget = 0;
       unsigned int nextTargetPriority = 10;
       for(auto& it : objects) {

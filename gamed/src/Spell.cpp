@@ -9,7 +9,10 @@
 
 using namespace std;
 
-Spell::Spell(Champion* owner, const std::string& spellName, uint8 slot) : owner(owner), spellName(spellName), level(0), slot(slot), state(STATE_READY), currentCooldown(0), currentCastTime(0), castTime(0.f), castRange(1000.f), projectileSpeed(2000.f), flags(0), projectileFlags(0) {
+Spell::Spell(Champion* owner, const std::string& spellName, uint8 slot) 
+   : owner(owner), spellName(spellName), level(0), slot(slot), state(STATE_READY)
+   , currentCooldown(0), currentCastTime(0), castTime(0.f), castRange(1000.f)
+   , projectileSpeed(2000.f), flags(0), projectileFlags(0) {
    
    cooldown.fill(1.f);
    cost.fill(1.f);

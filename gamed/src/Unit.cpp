@@ -16,16 +16,16 @@ Unit::~Unit() {
 
 void Unit::update(int64 diff) {
 
-      if(unitScript.isLoaded()){
-   try{
-   unitScript.lua.get <sol::function> ("onUpdate").call <void> (diff);
-   }catch(sol::error e){
-      printf("%s", e.what());
-   }
+    if(unitScript.isLoaded()){
+      try{
+        unitScript.lua.get <sol::function> ("onUpdate").call <void> (diff);
+      } catch(sol::error e){
+        printf("%s", e.what());
+      }
    }
 
    if (isDead()) {
-   return;
+    return;
    }
 
    if (unitTarget && unitTarget->isDead()) {
@@ -73,7 +73,7 @@ void Unit::update(int64 diff) {
    } else {
       refreshWaypoints();
       if (moveOrder == MOVE_ORDER_ATTACKMOVE && !unitTarget) {
-         const std::map<uint32, Object*>& objects = map->getObjects();
+         const Map::ObjectMap& objects = map->getObjects();
 
          for (auto& it : objects) {
             Unit* u = dynamic_cast<Unit*> (it.second);
