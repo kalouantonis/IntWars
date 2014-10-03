@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "RAFManager.h"
 #include "Inibin.h"
 #include "ItemManager.h"
+#include "Pathfinder.h"
 
 #define SERVER_HOST ENET_HOST_ANY 
 #define SERVER_PORT 5119
@@ -54,6 +55,7 @@ int main(int argc, char ** argv)
 
 	g.netLoop();
    
+   PathNode::DestroyTable(); // Cleanup
 	
    return EXIT_SUCCESS;
 }

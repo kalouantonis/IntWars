@@ -31,13 +31,13 @@ enum FieldMaskTwo : uint32 {
     FM2_Bonus_Ap_Flat =     0x00010000, // AP flat bonuses
     FM2_Atks_multiplier =   0x00080000, // Attack speed multiplier. If set to 2 and champ's base attack speed is 0.600, then his new AtkSpeed becomes 1.200
     FM2_cdr =               0x00400000, // Cooldown reduction. 0.5 = 50%   
-    FM2_Armor_Pen_Flat =    0x02000000,
-    FM2_Armor_Pen_Pct =     0x04000000, // Armor pen. 0.5 = 50%
-    FM2_Magic_Pen_Flat =    0x08000000,
-    FM2_Magic_Pen_Pct =     0x10000000,
-    FM2_LifeSteal =         0x20000000, //Life Steal. 0.5 = 50%
-    FM2_SpellVamp =         0x40000000, //Spell Vamp. 0.5 = 50%
-    FM2_Tenacity =          0x80000000 //Tenacity. 0.5 = 50%
+    FM2_Armor_Pen_Flat =    0x01000000,
+    FM2_Armor_Pen_Pct =     0x02000000, // Armor pen. 0.5 = 50%
+    FM2_Magic_Pen_Flat =    0x04000000,
+    FM2_Magic_Pen_Pct =     0x08000000,
+    FM2_LifeSteal =         0x10000000, //Life Steal. 0.5 = 50%
+    FM2_SpellVamp =         0x20000000, //Spell Vamp. 0.5 = 50%
+    FM2_Tenacity =          0x40000000 //Tenacity. 0.5 = 50%
 };
 
 enum FieldMaskThree : uint32 {

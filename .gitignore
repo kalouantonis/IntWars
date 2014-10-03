@@ -124,3 +124,5 @@ win/NetBeans/IntWars/nbproject/project.xml
 
 # CLion project files
 .idea/
+StartGame.bat
+Debug.bat

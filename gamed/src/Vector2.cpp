@@ -3,8 +3,10 @@
 #include "stdafx.h"
 #include "Vector2.h"
 
+/*
 // note: this function is not a member function!
- Vector2 operator-(const Vector2 &c1, const Vector2 &c2)
+// Commented out because they're replaced
+Vector2 operator-(const Vector2 &c1, const Vector2 &c2)
 {
    // use the Cents constructor and operator+(int, int)
    return Vector2(c1.X-c2.X, c1.Y-c2.Y);
@@ -26,12 +28,17 @@
  {
     // use the Cents constructor and operator+(int, int)
     return Vector2(c1.X * c2, c1.Y * c2);
- }
+ }*/
 
 
 // Returns the length of the vector
 float Vector2::Length(){
    return sqrt(X * X + Y * Y);
+}
+
+// Returns the length of the vector
+float Vector2::SqrLength(){
+   return (X * X + Y * Y);
 }
 
 // Normalizes the vector

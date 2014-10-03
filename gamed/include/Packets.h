@@ -31,6 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Minion.h"
 #include "Turret.h"
 #include "LevelProp.h"
+#include "Map.h"
 
 #if defined( __GNUC__ )
 #pragma pack(1)
@@ -1032,6 +1033,8 @@ struct CastSpell {
 class CastSpellAns : public GamePacket {
 public:
    CastSpellAns(Spell* s, float x, float y, uint32 futureProjNetId, uint32 spellNetId) : GamePacket(PKT_S2C_CastSpellAns, s->getOwner()->getNetId()) {
+      Map* m = s->getOwner()->getMap();
+   
       buffer << (uint8)0 << (uint8)0x66 << (uint8)0x00; // unk
       buffer << s->getId(); // Spell hash, for example hash("EzrealMysticShot")
       buffer << (uint32)spellNetId; // Spell net ID
@@ -1040,8 +1043,8 @@ public:
       buffer << s->getOwner()->getNetId() << s->getOwner()->getNetId();
       buffer << (uint32)s->getOwner()->getChampionHash();
       buffer << (uint32)futureProjNetId; // The projectile ID that will be spawned
-      buffer << x << 55.f << y;
-      buffer << x << 55.f << y;
+      buffer << x << m->getHeightAtLocation(x, y) << y;
+      buffer << x << m->getHeightAtLocation(x, y) << y;
       buffer << (uint8)0; // unk
       buffer << s->getCastTime();
       buffer << (float)0.f; // unk
@@ -1051,7 +1054,7 @@ public:
       buffer << (uint8)0; // unk
       buffer << s->getSlot(); 
       buffer << s->getCost();
-      buffer << s->getOwner()->getX() << 55.f << s->getOwner()->getY();
+      buffer << s->getOwner()->getX() << s->getOwner()->getZ() << s->getOwner()->getY();
       buffer << (uint64)1; // unk
    }
 };
@@ -1077,23 +1080,25 @@ public:
 class SpawnProjectile : public BasePacket {
 public:
    SpawnProjectile(Projectile* p) : BasePacket(PKT_S2C_SpawnProjectile, p->getNetId()) {
-      buffer << p->getX() << 150.f << p->getY();
-      buffer << p->getX() << 150.f << p->getY();
+      float targetZ = p->getMap()->getHeightAtLocation(p->getTarget()->getX(), p->getTarget()->getY());
+   
+      buffer << p->getX() << p->getZ() << p->getY();
+      buffer << p->getX() << p->getZ() << p->getY();
       buffer << (uint64)0x000000003f510fe2; // unk
       buffer << (float)0.577f; // unk
-      buffer << p->getTarget()->getX() << 150.f << p->getTarget()->getY();
-      buffer << p->getX() << 150.f << p->getY();
-      buffer << p->getTarget()->getX() << 150.f << p->getTarget()->getY();
-      buffer << p->getX() << 150.f << p->getY();
+      buffer << p->getTarget()->getX() << targetZ << p->getTarget()->getY();
+      buffer << p->getX() << p->getZ() << p->getY();
+      buffer << p->getTarget()->getX() << targetZ << p->getTarget()->getY();
+      buffer << p->getX() << p->getZ() << p->getY();
       buffer << uint32(0); // unk
-      buffer << 2000.f; // Projectile speed
+      buffer << p->getMoveSpeed(); // Projectile speed
       buffer << (uint64)0x00000000d5002fce; // unk
       buffer << (uint32)0x7f7fffff; // unk
       buffer << (uint8)0 << (uint8)0x66 << (uint8)0;
       buffer << (uint32)p->getProjectileId(); // unk (projectile ID)
       buffer << (uint32)0; // Second net ID
       buffer << (uint8)0; // unk
-      buffer << (uint32)0x3f800000; // unk (1.0f)
+      buffer << 1.0f;
       buffer << p->getOwner()->getNetId() << p->getOwner()->getNetId();
       
       Champion* c = dynamic_cast<Champion*>(p->getOwner());
@@ -1104,8 +1109,8 @@ public:
       }
       
       buffer << p->getNetId();
-      buffer << p->getTarget()->getX() << 150.f << p->getTarget()->getY();
-      buffer << p->getTarget()->getX() << 150.f << p->getTarget()->getY();
+      buffer << p->getTarget()->getX() << targetZ << p->getTarget()->getY();
+      buffer << p->getTarget()->getX() << targetZ << p->getTarget()->getY();
       buffer << (uint32)0x80000000; // unk
       buffer << (uint32)0x000000bf; // unk
       buffer << (uint32)0x80000000; // unk
@@ -1114,7 +1119,7 @@ public:
       buffer << (uint16)0x0000; // unk
       buffer << (uint8)0x2f; // unk
       buffer << (uint32)0x00000000; // unk
-      buffer << p->getX() << 150.f << p->getY();
+      buffer << p->getX() << p->getZ() << p->getY();
       buffer << (uint64)0x0000000000000000; // unk
    }
 

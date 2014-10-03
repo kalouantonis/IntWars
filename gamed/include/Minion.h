@@ -38,6 +38,7 @@ public:
    
    virtual void update(int64 diff) override;
 
+   void onCollision(Object * a_Collider);
 };
 
 #endif

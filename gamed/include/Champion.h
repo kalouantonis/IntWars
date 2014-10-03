@@ -46,6 +46,8 @@ public:
    
    virtual void die(Unit* killer) override;
    int64 getRespawnTimer() const { return respawnTimer; }
+
+   void onCollision(Object *collider);
    
    float getChampionGoldFromMinions() { return championGoldFromMinions; }
    void setChampionGoldFromMinions(float gold) { this->championGoldFromMinions = gold; }

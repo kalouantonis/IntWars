@@ -38,6 +38,7 @@ void ItemManager::init() {
       statMods.push_back({MM_Two, FM2_Armor, inibin.getFloatValue("DATA", "FlatArmorMod")});
       statMods.push_back({MM_Two, FM2_Magic_Armor, inibin.getFloatValue("DATA", "FlatSpellBlockMod")});
       statMods.push_back({MM_Two, FM2_Atks_multiplier, inibin.getFloatValue("DATA", "PercentAttackSpeedMod")});
+      statMods.push_back({MM_Two, FM2_LifeSteal, inibin.getFloatValue("DATA", "PercentLifeStealMod")});
       
       statMods.push_back({MM_Four, FM4_MaxHp, inibin.getFloatValue("DATA", "FlatHPPoolMod")});
       statMods.push_back({MM_Four, FM4_MaxMp, inibin.getFloatValue("DATA", "FlatMPPoolMod")});

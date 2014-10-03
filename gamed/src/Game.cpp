@@ -214,6 +214,7 @@ void Game::netLoop()
       if(_started) {
          map->update(tDiff);
       }
+      tDiff = std::chrono::duration_cast<std::chrono::microseconds>(tStart - tEnd).count();
       std::this_thread::sleep_for(std::chrono::microseconds(REFRESH_RATE*1000));
    }
 }

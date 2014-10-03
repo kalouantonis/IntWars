@@ -16,12 +16,31 @@ public:
    Vector2(const Vector2& v) : X(v.X), Y(v.Y) { }
    ~Vector2(void);
    float Length();
+   float SqrLength();
    Vector2 Normalize();
    float X, Y;
-   friend Vector2 operator-(const Vector2 &c1, const Vector2 &c2);
-   friend Vector2 operator+(const Vector2 &c1, const Vector2 &c2);
-   friend Vector2 operator*(const Vector2 &c1, const int c2);
-   friend Vector2 operator*(const Vector2 &c1, const double c2);
+
+   void operator += (const Vector2& a_V) { X += a_V.X; Y += a_V.Y; }
+   void operator += (Vector2* a_V) { X += a_V->X; Y += a_V->Y; }
+   void operator -= (const Vector2& a_V) { X -= a_V.X; Y -= a_V.Y; }
+   void operator -= (Vector2* a_V) { X -= a_V->X; Y -= a_V->Y; }
+   void operator *= (const float f) { X *= f; Y *= f;  }
+   void operator *= (const Vector2& a_V) { X *= a_V.X; Y *= a_V.Y; }
+   void operator *= (Vector2* a_V) { X *= a_V->X; Y *= a_V->Y; }
+
+   Vector2 operator- () const { return Vector2(-X, -Y); }
+   friend Vector2 operator + (const Vector2& v1, const Vector2& v2) { return Vector2(v1.X + v2.X, v1.Y + v2.Y); }
+   friend Vector2 operator + (const Vector2& v1, Vector2* v2) { return Vector2(v1.X + v2->X, v1.Y + v2->Y); }
+   friend Vector2 operator - (const Vector2& v1, const Vector2& v2) { return Vector2(v1.X - v2.X, v1.Y - v2.Y); }
+   friend Vector2 operator - (const Vector2& v1, Vector2* v2) { return Vector2(v1.X - v2->X, v1.Y - v2->Y); }
+   friend Vector2 operator - (const Vector2* v1, Vector2& v2) { return Vector2(v1->X - v2.X, v1->Y - v2.Y); }
+   // friend Vector2 operator - ( const Vector2* v1, Vector2* v2 ) { return Vector2( v1->X - v2->X, v1->Y - v2->Y, v1->z - v2->z ); }
+   friend Vector2 operator * (const Vector2& v, const float f) { return Vector2(v.X * f, v.Y * f); }
+   friend Vector2 operator * (const Vector2& v1, const Vector2& v2) { return Vector2(v1.X * v2.X, v1.Y * v2.Y); }
+   friend Vector2 operator * (const float f, const Vector2& v) { return Vector2(v.X * f, v.Y * f); }
+   friend Vector2 operator / (const Vector2& v, const float f) { return Vector2(v.X / f, v.Y / f); }
+   friend Vector2 operator / (const Vector2& v1, const Vector2& v2) { return Vector2(v1.X / v2.X, v1.Y / v2.Y); }
+   friend Vector2 operator / (const float f, const Vector2& v) { return Vector2(v.X / f, v.Y / f); }
 
 };
 #endif	/* VECTOR2_H */
